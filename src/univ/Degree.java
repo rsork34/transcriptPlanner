@@ -1,3 +1,7 @@
+package univ;
+
+import univ.Course;
+
 import java.io.FileWriter;
 import java.util.ArrayList;
 
@@ -57,9 +61,9 @@ public abstract class Degree {
             return new ArrayList<Course>(); 
         } 
 
-    public abstract boolean meetsRequirements(PlanOfStudy thePlan);
+    /*public abstract boolean meetsRequirements(PlanOfStudy thePlan);
     public abstract double numberOfCreditsRemaining(PlanOfStudy thePlan);
-    public abstract ArrayList<Course> remainingRequiredCourses(PlanOfStudy thePlan);
+    public abstract ArrayList<Course> remainingRequiredCourses(PlanOfStudy thePlan);*/
 
     @Override
     public abstract String toString();

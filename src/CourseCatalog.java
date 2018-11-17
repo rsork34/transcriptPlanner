@@ -1,4 +1,6 @@
 
+import univ.Course;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -64,7 +66,7 @@ public class CourseCatalog {
         }
     }
 
-    public void initializeCatalog(String filename) {
+    /*public void initializeCatalog(String filename) {
         try {
             FileReader PoSData = new FileReader(filename);
             int filePointer, index = 0;
@@ -134,7 +136,7 @@ public class CourseCatalog {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public String toString() {

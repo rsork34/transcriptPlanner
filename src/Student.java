@@ -1,16 +1,25 @@
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Student {
-
     private String first;
     private String last;
     private int studentNum;
+    private Transcript transcript;
 
     public Student() {
         this.first = null;
         this.last = null;
         this.studentNum = 0;
+        transcript = new Transcript();
+    }
+
+    public Student(String first, String last, int studentNum) {
+        this.first = first;
+        this.last = last;
+        this.studentNum = studentNum;
+        transcript = new Transcript();
     }
 
     public void setFirstName(String first) {
@@ -44,6 +53,16 @@ public class Student {
     public String getLastName() { return this.last; }
 
     public Integer getStudentNumber() { return this.studentNum; }
+
+    public Transcript getTranscript() {
+        return this.transcript;
+    }
+
+    public void setTranscript(Transcript transcript) {
+        if (transcript != null) {
+            this.transcript = transcript;
+        }
+    }
 
     @Override
     public String toString() {

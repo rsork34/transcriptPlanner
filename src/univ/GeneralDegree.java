@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+package univ;
+
+import univ.Degree;
 
 public abstract class GeneralDegree extends Degree {
     protected static final double rqrdNumberOfCredits = 15.00;

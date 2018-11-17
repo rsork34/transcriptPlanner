@@ -1,10 +1,9 @@
-import java.io.File;
-import java.io.FileWriter;
+package univ;
+
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 
-public class BCG extends GeneralDegree {
+public class BCG extends Degree {
 
     private static final double maxOneSubjectCredits = 11.00;
     private static final double max1000LvlCredits = 6.00;
@@ -17,7 +16,7 @@ public class BCG extends GeneralDegree {
         super();
     }
 
-    public boolean meetsRequirements(PlanOfStudy thePlan) {
+    /*public boolean meetsRequirements(PlanOfStudy thePlan) {
         double totalCredits = 0.0, credits3000 = 0.0, credits1000 = 0.0, creditsSubject = 0.0, creditsCisStat2000 = 0.0;
         String[] courseCodeParts;
         for (Course c : thePlan.getCourses()) {
@@ -40,15 +39,10 @@ public class BCG extends GeneralDegree {
                 }
             }
         }
-        return totalCredits >= rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
-    }
+        return totalCredits >= GeneralDegree.rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
+    }*/
 
-
-
-
-
-
-    public double numberOfCreditsRemaining(PlanOfStudy thePlan) {
+    /*public double numberOfCreditsRemaining(PlanOfStudy thePlan) {
         double remainingCredits = 0;
         boolean completed = false;
         CourseCatalog catalog = thePlan.getCatalog();
@@ -62,9 +56,9 @@ public class BCG extends GeneralDegree {
 
         }
         return remainingCredits;
-    }
+    }*/
 
-    public ArrayList<Course> remainingRequiredCourses(PlanOfStudy thePlan) {
+    /*public ArrayList<Course> remainingRequiredCourses(PlanOfStudy thePlan) {
         boolean completed = false;
         CourseCatalog catalog = thePlan.getCatalog();
         ArrayList<Course> remainingRequiredCourses = new ArrayList<>();
@@ -86,7 +80,7 @@ public class BCG extends GeneralDegree {
             completed = false;
         }
         return remainingRequiredCourses;
-    }
+    }*/
 
     @Override
     public String toString() {
