@@ -14,4 +14,14 @@ public class PlanOfStudy
         this.student = student;
         catalog = new CourseCatalog();
     }
+
+    public Student getStudent() {
+        return this.student;
+    }
+
+    public CourseCatalog getCatalog() {
+        return catalog;
+    }
+
+    public void addCourseToPlan(String code, String title, )
 }

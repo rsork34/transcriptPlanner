@@ -65,9 +65,18 @@ public class CourseCatalog {
 
     private void hardCoded() {
         Course c1 = new Course("CIS 2500", "INT PROGRAMMING", "In progress", "B", 0.5);
+        addCourse(c1);
         Course c2 = new Course("CIS 2750", "hard stuff", "planned", "w", 0.75);
+        addCourse(c2);
         Course c3 = new Course("CIS 1500", "easy stuff", "In progress", "B", 0.5);
+        addCourse(c3);
         Course c4 = new Course("CIS 3110", "ALGOS", "Planned", "F", 0.5);
+        addCourse(c4);
+
+        for (Course c : courseCatalog) {
+            System.out.println(c);
+            System.out.println("\n");
+        }
     }
 
     /*public void initializeCatalog(String filename) {
