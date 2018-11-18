@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 
 public class GUI
 {
+
+    PlanOfStudy plan;
+
     JFrame frame;
     Container container;
 
@@ -14,6 +17,7 @@ public class GUI
 
     public GUI()
     {
+        plan = new PlanOfStudy();
         makeGUI();
     }
 
@@ -30,7 +34,9 @@ public class GUI
 
         // Add user options to option panel
         optionPanel.add(addCourseButton);
+        optionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         optionPanel.add(removeCourseButton);
+        optionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         optionPanel.add(addDegreeButton);
 
         // Label
@@ -54,13 +60,13 @@ public class GUI
 
     private void makePanels() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new FlowLayout());
+        mainPanel.setLayout(new GridLayout(2, 0));
 
         optionPanel = new JPanel();
-        optionPanel.setLayout(new FlowLayout());
+        optionPanel.setLayout(new BoxLayout(optionPanel, BoxLayout.Y_AXIS));
 
         inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout());
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
 
         container.add(mainPanel);
         mainPanel.add(optionPanel);

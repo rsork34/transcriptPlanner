@@ -20,6 +20,15 @@ public class Course {
         this.preReqList = new ArrayList<>();
     }
 
+    public Course(String courseCode, String courseTitle, String courseStatus, String semesterOffered, double credit) {
+        this.courseCode = courseCode;
+        this.courseTitle = courseTitle;
+        this.courseStatus = courseStatus;
+        this.semesterOffered = semesterOffered;
+        this.credit = credit;
+        this.preReqList = new ArrayList<>();
+    }
+
     /*  Deep Copy Constructor for Course */
     public Course(Course course) {
         this.courseCode = course.getCourseCode();

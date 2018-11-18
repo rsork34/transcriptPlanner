@@ -9,6 +9,7 @@ public class CourseCatalog {
 
     public CourseCatalog() {
         this.courseCatalog = new ArrayList<>();
+        hardCoded();
     }
 
     protected void setCourseCatalog(ArrayList<Course> courseCatalog) {
@@ -60,6 +61,13 @@ public class CourseCatalog {
         } catch (Exception e) {
             System.out.println("Failed to successfully save state for Plan Of Study.");
         }
+    }
+
+    private void hardCoded() {
+        Course c1 = new Course("CIS 2500", "INT PROGRAMMING", "In progress", "B", 0.5);
+        Course c2 = new Course("CIS 2750", "hard stuff", "planned", "w", 0.75);
+        Course c3 = new Course("CIS 1500", "easy stuff", "In progress", "B", 0.5);
+        Course c4 = new Course("CIS 3110", "ALGOS", "Planned", "F", 0.5);
     }
 
     /*public void initializeCatalog(String filename) {
@@ -161,12 +169,4 @@ public class CourseCatalog {
 
         return this.courseCatalog.equals(courseCat);
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.courseCatalog);
-        return hash;
-    }
-
 }
