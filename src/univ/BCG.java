@@ -90,8 +90,8 @@ public class BCG extends Degree {
         }
         if (this.listOfRequiredCourseCodes != null) {
             toString.append("Required Course Codes: ");
-            for (String s : listOfRequiredCourseCodes) {
-                toString.append(s).append(" ");
+            for (Course c : listOfRequiredCourseCodes) {
+                toString.append(c).append(" ");
             }
             toString.append(System.getProperty("line.separator"));
         }

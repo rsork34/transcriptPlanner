@@ -1,13 +1,7 @@
+package univ;
 
-import univ.Course;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CourseCatalog {
 
@@ -17,11 +11,13 @@ public class CourseCatalog {
         this.courseCatalog = new ArrayList<>();
     }
 
-    public void setCourseCatalog(ArrayList<Course> courseCatalog) {
+    protected void setCourseCatalog(ArrayList<Course> courseCatalog) {
         this.courseCatalog = courseCatalog;
     }
 
-    public ArrayList<Course> getCourseCatalog() { return this.courseCatalog; }
+    public ArrayList<Course> getCourseCatalog() {
+        return this.courseCatalog;
+    }
 
     public void addCourse(Course toAdd) {
         for (Course c : this.courseCatalog) {

@@ -34,6 +34,36 @@ public class Student {
 
     public void setStudentNumber(Integer studentNum) { this.studentNum = studentNum; }
 
+    public void setPlannedCourseList(ArrayList<Attempt> plannedCourseList) {
+        if (plannedCourseList != null) {
+            transcript.setPlannedCourses(plannedCourseList);
+        }
+    }
+
+    public void setCompletedCourseList(ArrayList<Attempt> completedCourseList) {
+        if (completedCourseList != null) {
+            transcript.setCompletedCourses(completedCourseList);
+        }
+    }
+
+    public void setTranscript(Transcript transcript) {
+        if (transcript != null) {
+            this.transcript = transcript;
+        }
+    }
+
+    public void addCompletedCourse(Attempt completed) {
+        if (completed != null) {
+            transcript.addCompletedCourse(completed);
+        }
+    }
+
+    public void addPlannedCourse(Attempt planned) {
+        if (planned != null) {
+            transcript.addPlannedCourse(planned);
+        }
+    }
+
     public String getFullName() {
         String fullName;
         if (this.first == null && this.last == null) {
@@ -58,11 +88,6 @@ public class Student {
         return this.transcript;
     }
 
-    public void setTranscript(Transcript transcript) {
-        if (transcript != null) {
-            this.transcript = transcript;
-        }
-    }
 
     @Override
     public String toString() {

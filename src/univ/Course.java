@@ -12,7 +12,6 @@ public class Course {
     private double credit;
     private ArrayList<Course> preReqList;
 
-
     public Course() {
         this.courseCode = null;
         this.courseTitle = null;

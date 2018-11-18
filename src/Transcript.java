@@ -27,4 +27,10 @@ public class Transcript
             completedCourses.add(completed);
         }
     }
+
+    public void addPlannedCourse(Attempt planned) {
+        if (planned != null && plannedCourses != null) {
+            plannedCourses.add(planned);
+        }
+    }
 }

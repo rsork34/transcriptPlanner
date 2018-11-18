@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 public class GUI
 {
     JFrame frame;
-    GUIEvents events;
-    JPanel addCoursePanel;
     Container container;
-    JLabel displayLabel;
-    JLabel infoLabel;
-    JTextField inputField;
+
+    // Panels
+    JPanel mainPanel;
+    JPanel optionPanel;
+    JPanel inputPanel;
 
     public GUI()
     {
@@ -19,59 +19,57 @@ public class GUI
 
     private void makeGUI()
     {
-        // Create frame and content pane
-        frame = new JFrame("Planner");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(900,700));
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
-        container = frame.getContentPane();
-
-        // Main Panel
-        JPanel mainPanel = new JPanel();
-        container.add(mainPanel);
+        makeFrame();
+        makePanels();
 
         // Add course button to main panel
         JButton addCourseButton = new JButton("Add Course");
-        addCourseButton.addActionListener((ActionEvent e) -> {addCourse();});
-        mainPanel.add(addCourseButton);
+        JButton removeCourseButton = new JButton("Remove Course");
+        JButton addDegreeButton = new JButton("Add Degree");
+        addCourseButton.addActionListener((ActionEvent e) -> addCourse());
 
-        // Panel for user info
-        JPanel userPanel = new JPanel();
-        userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
-        userPanel.setPreferredSize(new Dimension(900,200));
-        container.add(userPanel);
+        // Add user options to option panel
+        optionPanel.add(addCourseButton);
+        optionPanel.add(removeCourseButton);
+        optionPanel.add(addDegreeButton);
 
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout());
-        JPanel infoPanel = new JPanel();
+        // Label
+        JLabel infoLabel = new JLabel("Hey there");
 
-        userPanel.add(inputPanel);
-        userPanel.add(infoPanel);
-
-        // Label to display current info
-        displayLabel = new JLabel("Select Option");
-        inputPanel.add(displayLabel);
-
-        // Text field for input
-        inputField = new JTextField();
-        inputPanel.add(inputField);
-
-        // Submit button
-        JButton submitButton = new JButton("SUBMIT");
-        inputPanel.add(submitButton);
-
-        infoLabel = new JLabel("Info");
-        infoPanel.add(infoLabel);
+        inputPanel.add(infoLabel);
 
         // Pack and set visible
         frame.pack();
         frame.setVisible(true);
     }
 
+    private void makeFrame(){
+        // Create frame and content pane
+        frame = new JFrame("Planner");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(900,700));
+        frame.setLayout(new FlowLayout());
+        container = frame.getContentPane();
+    }
 
-    private void addCourse()
-    {
-        displayLabel.setText("Enter Course Code: \n");
+    private void makePanels() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new FlowLayout());
+
+        optionPanel = new JPanel();
+        optionPanel.setLayout(new FlowLayout());
+
+        inputPanel = new JPanel();
+        inputPanel.setLayout(new FlowLayout());
+
+        container.add(mainPanel);
+        mainPanel.add(optionPanel);
+        mainPanel.add(inputPanel);
+    }
+
+
+    private void addCourse() {
+
     }
 
 }

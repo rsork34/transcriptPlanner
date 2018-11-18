@@ -1,13 +1,12 @@
 package univ;
 
-import univ.Course;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
 
 public abstract class Degree {
     String title;
-    ArrayList<String> listOfRequiredCourseCodes;  //this should probably be an ArrayList<Course>
+    ArrayList<Course> listOfRequiredCourseCodes;  //this should probably be an ArrayList<Course>
 
     public Degree() {
         this.title = null;
@@ -41,7 +40,7 @@ public abstract class Degree {
     }
     public String getDegreeTitle() { return this.title; }
 
-    public void setRequiredCourses(ArrayList<String> listOfRequiredCourseCodes) {
+    public void setRequiredCourses(ArrayList<Course> listOfRequiredCourseCodes) {
         if (listOfRequiredCourseCodes != null && !listOfRequiredCourseCodes.isEmpty())
             this.listOfRequiredCourseCodes = listOfRequiredCourseCodes;
     }
@@ -55,7 +54,6 @@ public abstract class Degree {
 				     find the course in the course catalog
 				     add the found course to an arraylist
 			     return the arraylist
-	
         	**/
 
             return new ArrayList<Course>(); 
@@ -69,7 +67,4 @@ public abstract class Degree {
     public abstract String toString();
     @Override
     public abstract boolean equals(Object o);
-    @Override
-    public abstract int hashCode();
-
 }
