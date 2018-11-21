@@ -1,13 +1,17 @@
+import univ.Degree;
+
 import java.util.ArrayList;
 
 public class Transcript
 {
+    private Degree degree;
     private ArrayList<Attempt> completedCourses;
     private ArrayList<Attempt> plannedCourses;
 
     public Transcript() {
         completedCourses = new ArrayList<>();
         plannedCourses = new ArrayList<>();
+        degree = null;
     }
 
     public void setCompletedCourses(ArrayList<Attempt> completedCourses) {
@@ -31,6 +35,19 @@ public class Transcript
     public void addPlannedCourse(Attempt planned) {
         if (planned != null && plannedCourses != null) {
             plannedCourses.add(planned);
+        }
+    }
+
+    public boolean hasDegree() {
+        if (degree != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setDegree(Degree degree) {
+        if (degree != null) {
+            this.degree = degree;
         }
     }
 }

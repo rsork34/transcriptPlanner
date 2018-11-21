@@ -23,5 +23,15 @@ public class PlanOfStudy
         return catalog;
     }
 
-    public void addCourseToPlan(String code, String title, )
+    public void addAttemptToPlan(Course course, String semester, String grade, String status) {
+        if (status.equals("In Progress")) {
+
+        }
+        else if (status.equals("Planned")) {
+
+        }
+        else {
+            System.out.println("Error Invalid Attempt");
+        }
+    }
 }

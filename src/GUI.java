@@ -1,12 +1,14 @@
+import univ.Course;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class GUI
 {
+    String userInputString;
 
     PlanOfStudy plan;
-
     JFrame frame;
     Container container;
 
@@ -14,6 +16,11 @@ public class GUI
     JPanel mainPanel;
     JPanel optionPanel;
     JPanel inputPanel;
+
+    JButton submitButton;
+    JTextField inputField;
+    JLabel infoLabel;
+    JLabel errorLabel;
 
     public GUI()
     {
@@ -26,11 +33,18 @@ public class GUI
         makeFrame();
         makePanels();
 
-        // Add course button to main panel
+        // User story options
         JButton addCourseButton = new JButton("Add Course");
         JButton removeCourseButton = new JButton("Remove Course");
         JButton addDegreeButton = new JButton("Add Degree");
+
+        // Submit button
+        submitButton = new JButton("Submit");
+        submitButton.setVisible(false);
+
+        // Action events
         addCourseButton.addActionListener((ActionEvent e) -> addCourse());
+        submitButton.addActionListener((ActionEvent e) -> getInput());
 
         // Add user options to option panel
         optionPanel.add(addCourseButton);
@@ -39,10 +53,20 @@ public class GUI
         optionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         optionPanel.add(addDegreeButton);
 
-        // Label
-        JLabel infoLabel = new JLabel("Hey there");
+        // Label to prompt user
+        infoLabel = new JLabel("Hey there");
+        // Error label
+        errorLabel = new JLabel("Invalid input");
+        errorLabel.setVisible(false);
+
+        // User input field
+        inputField = new JTextField();
+        inputField.setVisible(false);
+        inputField.setColumns(10);
 
         inputPanel.add(infoLabel);
+        inputPanel.add(inputField);
+        inputPanel.add(submitButton);
 
         // Pack and set visible
         frame.pack();
@@ -73,9 +97,29 @@ public class GUI
         mainPanel.add(inputPanel);
     }
 
-
-    private void addCourse() {
-
+    private void getInput() {
+        try {
+            System.out.println("yeet");
+            userInputString = inputField.getText();
+            System.out.println(userInputString);
+        }
+        catch (Exception e) {
+            System.out.println("Error, invalid input");
+        }
     }
 
+    private void addCourse() {
+        boolean validInput = false;
+        String input;
+
+        inputField.setVisible(true);
+        submitButton.setVisible(true);
+
+        // Get course code to add
+        infoLabel.setText("Enter Course Code: ");
+
+        if (userInputString != null) {
+            infoLabel.setText(userInputString);
+        }
+    }
 }
