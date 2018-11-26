@@ -145,7 +145,6 @@ public class CourseCatalog {
                     catalogCourse.setPrerequisites(cat);
                 }
             }
-            System.out.println("Course Catalog initialized.");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CourseCatalog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {

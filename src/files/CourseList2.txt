@@ -1,0 +1,49 @@
+CIS 1000,	0.5,	Introduction to Computer Applications,	
+CIS 1200,	0.5,	Introduction to Computing,	
+CIS 1250,	0.5,	Software Design 1,	
+CIS 1500,	0.5,	Introduction to Programming,	
+CIS 1910,	0.5,	Discrete Structures in Computing 1,	
+CIS 2030,	0.5,	Structures and Application of Microcomputers,	CIS 1910:CIS 2500
+CIS 2050,	0.5,	Computers and Society,	
+CIS 2170,	0.75,	User Interface Design,	CIS 1500
+CIS 2250,	0.5,	Software Design 2,	CIS 1250
+CIS 2430,	0.5,	Object Oriented Programming,	CIS 2500
+CIS 2460,	0.5,	Modelling of Computer Systems,	STAT 2040
+CIS 2500,	0.5,	Intermediate Programming,	CIS 1500
+CIS 2520,	0.5,	Data Structures,	CIS 2500:CIS 1910
+CIS 2750,	0.75,	Software Systems Development and Integration,	CIS 2520:CIS 2430
+CIS 2910,	0.5,	Discrete Structures in Computing 2,	CIS 1500:CIS 1910
+CIS 3000,	0.5,	Social Implications of Computers,	
+CIS 3090,	0.5,	Parallel Programming,	
+CIS 3110,	0.5,	Operating Systems,	CIS 2520:CIS 2030
+CIS 3120,	0.5,	Digital Systems 1,	CIS 1910:CIS 2500
+CIS 3150,	0.5,	Theory of Computation,	CIS 2750:CIS 3490
+CIS 2190,	0.5,	Software for Legacy Systems,	CIS 2500
+CIS 3210,	0.5,	Computer Networks,	CIS 3110
+CIS 3250,	0.5,	Software Design 3,	CIS 2250:CIS 2500
+CIS 3260,	0.5,	Software Design 4,	CIS 2750:CIS 3250:CIS 3760
+CIS 3490,	0.5,	The Analysis of Design of Computer Algorithms,	CIS 1910:CIS 2520
+CIS 3530,	0.5,	Data Base Systems and Concepts,	CIS 2520
+CIS 3700,	0.5,	Introduction to Itelligent Systems,	CIS 3750:CIS 2460
+CIS 3750,	0.5,	System Analysis and Design in App,	CIS 2750
+CIS 3760,	0.75,	Software Engineering,	CIS 3750
+CIS 4050,	0.5,	Digital Systems 2,	CIS 3110:CIS 3120
+CIS 4150,	0.5,	Software Reliability and Testing,	CIS 3750
+CIS 4250,	0.5,	Software Design 5,	CIS 2750:CIS 3260
+CIS 4300,	0.5,	Human Computer Interaction,	CIS 3110:CIS 3750
+CIS 4410,	0.5,	Trends in Distributed Systems,	CIS 3210:CIS 2750
+CIS 4430,	0.5,	Information Organization and Retrieval,	CIS 3110:CIS 3530:CIS 3750
+CIS 4450,	0.5,	Special Topics in Computer Science,	
+CIS 4500,	0.5,	Special Topics in Computer Science,	
+CIS 4510,	0.5,	Computer Security Foundations,	CIS 3210
+CIS 4520,	0.5,	Introduction to Cryptography,	CIS 3490
+CIS 4650,	0.5,	Compilers,	CIS 2030:CIS 3110:CIS 3150
+CIS 4720,	0.5,	Image Processing and Vision,	CIS*2750:CIS 3110:CIS 2460
+CIS 4780,	0.5,	Computational Intelligence,	CIS 3750:CIS 3490:CIS 2460
+CIS 4800,	0.5,	Computer Graphics,	CIS 3110:CIS 3750
+CIS 4820,	0.5,	Game Programming,	CIS 3110:CIS 3750
+CIS 4900,	0.5,	Computer Science Project,	
+CIS 4910,	0.5,	Computer Science Thesis,	CIS 4900
+MATH 1080,	0.5,	Elements of Calculus 1,	
+MATH 1200,	0.5,	Calculus 1,	
+STAT 2040,	0.5,	Statistics 1,	MATH 1080

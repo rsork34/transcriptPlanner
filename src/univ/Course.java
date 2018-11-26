@@ -56,8 +56,8 @@ public class Course {
         }
     }
 
-    protected void setCourseCredit(Double credit) {
-        if (credit != null && credit >= 0 && credit <= 1.0) {
+    protected void setCourseCredit(double credit) {
+        if (credit >= 0 && credit <= 1.0) {
             this.credit = credit;
         }
     }

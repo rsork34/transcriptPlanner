@@ -47,6 +47,9 @@ public class GUI {
         makeGUI();
     }
 
+    /**
+     * Creates the GUI and loads components
+     */
     private void makeGUI() {
         frame = new JFrame("Planner");
         frame.setContentPane(mainPanel);
@@ -92,6 +95,9 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void setAllInvisible() {
         errorLabel.setText("");
 
@@ -123,6 +129,9 @@ public class GUI {
         submitButton.setVisible(false);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectChangeGrade() {
         plannedCurrentComboBox.removeAllItems();
         completeComboBox.removeAllItems();
@@ -172,6 +181,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectAddCourse() {
         currentOption = "add course";
         errorLabel.setText("");
@@ -205,6 +217,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectRemoveCourse() {
         plannedCurrentComboBox.removeAllItems();
         completeComboBox.removeAllItems();
@@ -251,6 +266,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectViewTotalCredits() {
         currentOption = "total credits";
         errorLabel.setText("");
@@ -284,6 +302,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectViewCisGPA() {
         currentOption = "CIS GPA";
         errorLabel.setText("");
@@ -316,6 +337,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectViewGPA() {
         currentOption = "GPA";
         errorLabel.setText("");
@@ -349,6 +373,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectAddDegree() {
         currentOption = "add degree";
 
@@ -387,6 +414,9 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * Display the correct components based on user choice
+     */
     private void selectStudentInfo() {
         currentOption = "student info";
 
@@ -418,6 +448,11 @@ public class GUI {
         submitButton.setVisible(true);
     }
 
+    /**
+     * When submit is pressed, depending on the button state the correct function is called
+     * For example: if add course button was pressed and submit is then pressed to input course info,
+     * the add course function is called to take in said info
+     */
     private void submit() {
         if (currentOption.equals("add course")) {
             addCourseToPlan();
@@ -438,6 +473,11 @@ public class GUI {
         }
     }
 
+    /**
+     * Gets students first name, last name, and student number and sets them
+     *
+     * @throws Exception if there is an error using student setters, in case student is null
+     */
     private void setStudentInfo() {
         String fullName = studentInfoTextField.getText();
         String studentNumberString = studentNumberTextField.getText();
@@ -520,7 +560,7 @@ public class GUI {
         for (Attempt a : plan.getStudent().getTranscript().getCompletedCourses()) {
             try {
                 String courseCode = a.getCourseCode();
-                System.out.println("REEEEE " + courseCode);
+
             } catch (Exception e) {
 
             }
@@ -552,7 +592,7 @@ public class GUI {
     /**
      * Change the grade of a course attempt in the student's transcript
      *
-     * @Exception Exception if the input grade is non numerical
+     * @throws Exception if the input grade is non numerical
      */
     private void changeGrade() {
         // Ensure valid grade
@@ -613,7 +653,7 @@ public class GUI {
     /**
      * Removes a course from a students plan of study
      *
-     * @Exception Exception in case of null value passed back from transcript
+     * @throws Exception in case of null value passed back from transcript
      */
     private void removeCourseFromPlan() {
         String plannedToRemove = (String) plannedCurrentComboBox.getSelectedItem();
