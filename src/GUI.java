@@ -4,8 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class GUI
-{
+public class GUI {
     private PlanOfStudy plan;
     private JPanel mainPanel;
     private JPanel optionsPanel;
@@ -42,18 +41,16 @@ public class GUI
 
     private String currentOption;
 
-    public GUI()
-    {
+    public GUI() {
         currentOption = "none";
         plan = new PlanOfStudy();
         makeGUI();
     }
 
-    private void makeGUI()
-    {
+    private void makeGUI() {
         frame = new JFrame("Planner");
         frame.setContentPane(mainPanel);
-        frame.setPreferredSize(new Dimension(500,500));
+        frame.setPreferredSize(new Dimension(500, 500));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setAllInvisible();
@@ -357,8 +354,7 @@ public class GUI
 
         if (!plan.getStudent().getTranscript().hasDegree()) {
             errorLabel.setText("Current Degree: None");
-        }
-        else {
+        } else {
             errorLabel.setText("Current Degree: " + plan.getStudent().getTranscript().getDegreeTitle());
         }
 
@@ -425,26 +421,19 @@ public class GUI
     private void submit() {
         if (currentOption.equals("add course")) {
             addCourseToPlan();
-        }
-        else if (currentOption.equals("add degree")) {
+        } else if (currentOption.equals("add degree")) {
             addDegreeToPlan();
-        }
-        else if (currentOption.equals("remove course")) {
+        } else if (currentOption.equals("remove course")) {
             removeCourseFromPlan();
-        }
-        else if (currentOption.equals("change grade")) {
+        } else if (currentOption.equals("change grade")) {
             changeGrade();
-        }
-        else if (currentOption.equals("GPA")) {
+        } else if (currentOption.equals("GPA")) {
             viewGPA();
-        }
-        else if (currentOption.equals("total credits")) {
+        } else if (currentOption.equals("total credits")) {
             viewTotalCredits();
-        }
-        else if (currentOption.equals("CIS GPA")) {
+        } else if (currentOption.equals("CIS GPA")) {
             viewCisGPA();
-        }
-        else if (currentOption.equals("student info")) {
+        } else if (currentOption.equals("student info")) {
             setStudentInfo();
         }
     }
@@ -468,8 +457,7 @@ public class GUI
         if (nameParts.length != 2) {
             errorLabel.setText("Enter only first and last name");
             return;
-        }
-        else {
+        } else {
             try {
                 firstName = nameParts[0];
                 lastName = nameParts[1];
@@ -479,8 +467,7 @@ public class GUI
                 }
                 plan.getStudent().setFirstName(firstName);
                 plan.getStudent().setLastName(lastName);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 errorLabel.setText("Error: invalid input");
             }
         }
@@ -497,8 +484,7 @@ public class GUI
 
             studentNumber = Integer.parseInt(studentNumberString);
             plan.getStudent().setStudentNumber(studentNumber);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             errorLabel.setText("Error: Invalid Student Number");
             return;
         }
@@ -535,8 +521,7 @@ public class GUI
             try {
                 String courseCode = a.getCourseCode();
                 System.out.println("REEEEE " + courseCode);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
 
             }
         }
@@ -566,6 +551,7 @@ public class GUI
 
     /**
      * Change the grade of a course attempt in the student's transcript
+     *
      * @Exception Exception if the input grade is non numerical
      */
     private void changeGrade() {
@@ -578,8 +564,7 @@ public class GUI
         }
         try {
             grade = Double.parseDouble(gradeString);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             errorLabel.setText("Error: invalid grade");
             return;
         }
@@ -588,15 +573,14 @@ public class GUI
             return;
         }
 
-        String completed = (String)completeComboBox.getSelectedItem();
-        String plannedCurrent = (String)plannedCurrentComboBox.getSelectedItem();
+        String completed = (String) completeComboBox.getSelectedItem();
+        String plannedCurrent = (String) plannedCurrentComboBox.getSelectedItem();
 
         // If no boxes or both boxes are selected, error
         if (plannedCurrent.isEmpty() && completed.isEmpty()) {
             errorLabel.setText("No course selected");
             return;
-        }
-        else if (!plannedCurrent.isEmpty() && !completed.isEmpty()) {
+        } else if (!plannedCurrent.isEmpty() && !completed.isEmpty()) {
             errorLabel.setText("Select one course only");
             return;
         }
@@ -607,8 +591,7 @@ public class GUI
                 plan.getStudent().getTranscript().updatePlannedGrade(plannedCurrent, gradeString);
                 errorLabel.setText(plannedCurrent + " grade is now: " + gradeString + "%");
                 return;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 errorLabel.setText("Could not update grade");
                 return;
             }
@@ -620,8 +603,7 @@ public class GUI
                 plan.getStudent().getTranscript().updateCompletedGrade(holder[0] + " " + holder[1], gradeString);
                 errorLabel.setText(completed + " grade is now: " + gradeString + "%");
                 return;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 errorLabel.setText("Could not update grade");
                 return;
             }
@@ -630,6 +612,7 @@ public class GUI
 
     /**
      * Removes a course from a students plan of study
+     *
      * @Exception Exception in case of null value passed back from transcript
      */
     private void removeCourseFromPlan() {
@@ -641,8 +624,7 @@ public class GUI
         if (plannedToRemove.isEmpty() && completeToRemove.isEmpty()) {
             errorLabel.setText("No course(s) chosen");
             return;
-        }
-        else if (!plannedToRemove.isEmpty() && !completeToRemove.isEmpty()) {
+        } else if (!plannedToRemove.isEmpty() && !completeToRemove.isEmpty()) {
             errorLabel.setText("Error: choose only 1 course to remove");
             return;
         }
@@ -674,7 +656,8 @@ public class GUI
     /**
      * Takes user selected course code, grade, course status, and semester and creates a course
      * attempt, and adds it to their transcript
-     * @exception Exception if user enters a non numerical value into course grade
+     *
+     * @throws Exception if user enters a non numerical value into course grade
      */
     private void addCourseToPlan() {
         errorLabel.setText("");
@@ -711,19 +694,15 @@ public class GUI
         if (gradeString.isEmpty() && !status.equals("Planned")) {
             errorLabel.setText("Error: no grade");
             return;
-        }
-        else if (!gradeString.isEmpty() && status.equals("Planned")) {
+        } else if (!gradeString.isEmpty() && status.equals("Planned")) {
             errorLabel.setText("Error: planned course with grade");
             return;
-        }
-        else if (gradeString.isEmpty() && status.equals("Planned")) {
+        } else if (gradeString.isEmpty() && status.equals("Planned")) {
 
-        }
-        else {
+        } else {
             try {
                 grade = Double.parseDouble(gradeString);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 errorLabel.setText("Error: invalid grade");
                 return;
             }
@@ -778,7 +757,7 @@ public class GUI
      */
     private void addDegreeToPlan() {
         errorLabel.setText("");
-        String choice = (String)degreeComboBox.getSelectedItem();
+        String choice = (String) degreeComboBox.getSelectedItem();
 
         // Ensure degree is selected
         if (choice.isEmpty()) {
@@ -791,19 +770,126 @@ public class GUI
             Degree deg = new CS();
             plan.getStudent().getTranscript().setDegree(deg);
             errorLabel.setText("Degree added");
-        }
-        else if (choice.equals("SEng")) {
+        } else if (choice.equals("SEng")) {
             Degree deg = new SEng();
             plan.getStudent().getTranscript().setDegree(deg);
             errorLabel.setText("Degree added");
-        }
-        else if (choice.equals("BCG")) {
+        } else if (choice.equals("BCG")) {
             Degree deg = new BCG();
             plan.getStudent().getTranscript().setDegree(deg);
             errorLabel.setText("Degree added");
-        }
-        else {
+        } else {
             errorLabel.setText("Error");
         }
+    }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel.setEnabled(true);
+        optionsPanel = new JPanel();
+        optionsPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(8, 1, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.add(optionsPanel, BorderLayout.WEST);
+        removeCourseButton = new JButton();
+        removeCourseButton.setText("Remove Course");
+        optionsPanel.add(removeCourseButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        viewGPAButton = new JButton();
+        viewGPAButton.setText("View GPA");
+        optionsPanel.add(viewGPAButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        viewCreditsButton = new JButton();
+        viewCreditsButton.setText("View Total Credits");
+        optionsPanel.add(viewCreditsButton, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        studentInfoButton = new JButton();
+        studentInfoButton.setText("Set Student Info");
+        optionsPanel.add(studentInfoButton, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        viewCISGPAButton = new JButton();
+        viewCISGPAButton.setText("View CIS GPA");
+        optionsPanel.add(viewCISGPAButton, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        changeGradeButton = new JButton();
+        changeGradeButton.setText("Change Grade");
+        optionsPanel.add(changeGradeButton, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        addDegreeButton = new JButton();
+        addDegreeButton.setText("Add Degree");
+        optionsPanel.add(addDegreeButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        addToPlanButton = new JButton();
+        addToPlanButton.setText("Add Course ");
+        optionsPanel.add(addToPlanButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        inputPanel = new JPanel();
+        inputPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(10, 2, new Insets(0, 0, 0, 0), -1, -1));
+        inputPanel.setEnabled(true);
+        inputPanel.setVisible(true);
+        mainPanel.add(inputPanel, BorderLayout.CENTER);
+        courseCodeLabel = new JLabel();
+        courseCodeLabel.setText("Course Code:");
+        inputPanel.add(courseCodeLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        semesterLabel = new JLabel();
+        semesterLabel.setText("Semester:");
+        inputPanel.add(semesterLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gradeLabel = new JLabel();
+        gradeLabel.setText("Grade:");
+        inputPanel.add(gradeLabel, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        statusLabel = new JLabel();
+        statusLabel.setText("Status:");
+        inputPanel.add(statusLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        statusComboBox = new JComboBox();
+        inputPanel.add(statusComboBox, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(128, 30), null, 0, false));
+        gradeTextField = new JTextField();
+        inputPanel.add(gradeTextField, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(128, 30), null, 0, false));
+        semesterComboBox = new JComboBox();
+        inputPanel.add(semesterComboBox, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(128, 30), null, 0, false));
+        courseCodeComboBox = new JComboBox();
+        inputPanel.add(courseCodeComboBox, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(128, 30), null, 0, false));
+        submitButton = new JButton();
+        submitButton.setText("Submit");
+        inputPanel.add(submitButton, new com.intellij.uiDesigner.core.GridConstraints(9, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        errorLabel = new JLabel();
+        errorLabel.setText("");
+        inputPanel.add(errorLabel, new com.intellij.uiDesigner.core.GridConstraints(9, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        degreeLabel = new JLabel();
+        degreeLabel.setText("Degree:");
+        inputPanel.add(degreeLabel, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        degreeComboBox = new JComboBox();
+        inputPanel.add(degreeComboBox, new com.intellij.uiDesigner.core.GridConstraints(6, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        plannedCurrentLabel = new JLabel();
+        plannedCurrentLabel.setText("Planned/Current:");
+        inputPanel.add(plannedCurrentLabel, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        plannedCurrentComboBox = new JComboBox();
+        inputPanel.add(plannedCurrentComboBox, new com.intellij.uiDesigner.core.GridConstraints(7, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        completeComboBox = new JComboBox();
+        inputPanel.add(completeComboBox, new com.intellij.uiDesigner.core.GridConstraints(8, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        completeLabel = new JLabel();
+        completeLabel.setText("Complete:");
+        inputPanel.add(completeLabel, new com.intellij.uiDesigner.core.GridConstraints(8, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        studentInfoLabel = new JLabel();
+        studentInfoLabel.setText("Name:");
+        inputPanel.add(studentInfoLabel, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        studentInfoTextField = new JTextField();
+        inputPanel.add(studentInfoTextField, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        studentNumberLabel = new JLabel();
+        studentNumberLabel.setText("Student Number");
+        inputPanel.add(studentNumberLabel, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        studentNumberTextField = new JTextField();
+        inputPanel.add(studentNumberTextField, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return mainPanel;
     }
 }
