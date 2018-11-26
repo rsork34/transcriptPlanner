@@ -13,6 +13,11 @@ public abstract class Degree {
         this.listOfRequiredCourseCodes = new ArrayList<>();
     }
 
+    public Degree(String title) {
+        this.title = title;
+        this.listOfRequiredCourseCodes = new ArrayList<>();
+    }
+
     public void saveState() {
         try (FileWriter PoSData = new FileWriter("BootstrapDegrees.txt", true)) {
             String fileLine = this.getDegreeTitle();
@@ -38,6 +43,7 @@ public abstract class Degree {
         if (title != null && !title.isEmpty())
             this.title = title;
     }
+
     public String getDegreeTitle() { return this.title; }
 
     public void setRequiredCourses(ArrayList<Course> listOfRequiredCourseCodes) {

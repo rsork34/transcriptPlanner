@@ -1,7 +1,9 @@
 package univ;
 
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CourseCatalog {
 
@@ -9,7 +11,7 @@ public class CourseCatalog {
 
     public CourseCatalog() {
         this.courseCatalog = new ArrayList<>();
-        hardCoded();
+        initializeCatalog("files/CourseList2.txt");
     }
 
     protected void setCourseCatalog(ArrayList<Course> courseCatalog) {
@@ -79,7 +81,7 @@ public class CourseCatalog {
         }
     }
 
-    /*public void initializeCatalog(String filename) {
+    public void initializeCatalog(String filename) {
         try {
             FileReader PoSData = new FileReader(filename);
             int filePointer, index = 0;
@@ -149,7 +151,7 @@ public class CourseCatalog {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     @Override
     public String toString() {
@@ -166,6 +168,10 @@ public class CourseCatalog {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
         if (o == this) {
             return true;
         }

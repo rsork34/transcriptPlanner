@@ -105,6 +105,10 @@ public class Student {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
         if (o == this) {
             return true;
         }
@@ -121,14 +125,5 @@ public class Student {
             return false;
         }
         return this.studentNum == student.studentNum;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.first);
-        hash = 37 * hash + Objects.hashCode(this.last);
-        hash = 37 * hash + Objects.hashCode(this.studentNum);
-        return hash;
     }
 }

@@ -35,7 +35,20 @@ public class Attempt
 
     public void setAttemptGrade(String grade) {
         if (grade != null && !grade.isEmpty()) {
-            this.grade = grade;
+            if (grade.equals("P") || grade.equals("F") || grade.equals("INC") || grade.equals("MNR")) {
+                this.grade = grade;
+            }
+            else {
+                try {
+                    double gradeNum = Double.parseDouble(grade);
+                    if (gradeNum >= 0 && gradeNum <= 100) {
+                        this.grade = grade;
+                    }
+                }
+                catch (Exception e) {
+                    return;
+                }
+            }
         }
     }
 
@@ -46,23 +59,19 @@ public class Attempt
     }
 
     public void setCourseStatus(String status){
-        this.status = status;
-    }
-
-    public void setCourseGrade(String grade){
-        this.grade = grade;
+        if (status != null) {
+            this.status = status;
+        }
     }
 
     public void setGrade(String grade){
-        this.grade = grade;
+        if (grade != null) {
+            this.grade = grade;
+        }
     }
 
     public String getSemesterTaken() {
         return this.semesterTaken;
-    }
-
-    public String getCourseGrade() {
-        return this.grade;
     }
 
     public String getCourseCode() {
@@ -79,5 +88,25 @@ public class Attempt
 
     public Course getCourseAttempted() {
         return this.course;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Attempt)) {
+            return false;
+        }
+
+        Attempt a = (Attempt)o;
+
+        if (a.getCourseCode().equals(this.getCourseCode()) && a.getAttemptGrade().equals(this.getAttemptGrade()) &&
+            a.getCourseAttempted().equals(this.getCourseAttempted()) && a.getSemesterTaken().equals(this.getSemesterTaken()) &&
+            a.getStatus().equals(this.getStatus())) {
+            return true;
+        }
+        return false;
     }
 }

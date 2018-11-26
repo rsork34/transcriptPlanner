@@ -1,4 +1,4 @@
-import univ.Course;
+import univ.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,120 +6,804 @@ import java.awt.event.ActionEvent;
 
 public class GUI
 {
-    String userInputString;
+    private PlanOfStudy plan;
+    private JPanel mainPanel;
+    private JPanel optionsPanel;
+    private JPanel inputPanel;
+    private JButton addToPlanButton;
+    private JLabel courseCodeLabel;
+    private JLabel semesterLabel;
+    private JLabel gradeLabel;
+    private JLabel statusLabel;
+    private JComboBox statusComboBox;
+    private JTextField gradeTextField;
+    private JComboBox semesterComboBox;
+    private JComboBox courseCodeComboBox;
+    private JButton submitButton;
+    private JLabel errorLabel;
+    private JButton addDegreeButton;
+    private JComboBox degreeComboBox;
+    private JLabel degreeLabel;
+    private JButton removeCourseButton;
+    private JLabel plannedCurrentLabel;
+    private JComboBox plannedCurrentComboBox;
+    private JComboBox completeComboBox;
+    private JLabel completeLabel;
+    private JButton changeGradeButton;
+    private JButton viewGPAButton;
+    private JButton viewCreditsButton;
+    private JButton viewCISGPAButton;
+    private JButton studentInfoButton;
+    private JTextField studentInfoTextField;
+    private JLabel studentInfoLabel;
+    private JLabel studentNumberLabel;
+    private JTextField studentNumberTextField;
+    private JFrame frame;
 
-    PlanOfStudy plan;
-    JFrame frame;
-    Container container;
-
-    // Panels
-    JPanel mainPanel;
-    JPanel optionPanel;
-    JPanel inputPanel;
-
-    JButton submitButton;
-    JTextField inputField;
-    JLabel infoLabel;
-    JLabel errorLabel;
+    private String currentOption;
 
     public GUI()
     {
+        currentOption = "none";
         plan = new PlanOfStudy();
         makeGUI();
     }
 
     private void makeGUI()
     {
-        makeFrame();
-        makePanels();
+        frame = new JFrame("Planner");
+        frame.setContentPane(mainPanel);
+        frame.setPreferredSize(new Dimension(500,500));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // User story options
-        JButton addCourseButton = new JButton("Add Course");
-        JButton removeCourseButton = new JButton("Remove Course");
-        JButton addDegreeButton = new JButton("Add Degree");
+        setAllInvisible();
 
-        // Submit button
-        submitButton = new JButton("Submit");
-        submitButton.setVisible(false);
+        // Set courses to choose from
+        courseCodeComboBox.addItem("");
+        for (Course c : plan.getCatalog().getCourseCatalog()) {
+            courseCodeComboBox.addItem(c.getCourseCode());
+        }
 
-        // Action events
-        addCourseButton.addActionListener((ActionEvent e) -> addCourse());
-        submitButton.addActionListener((ActionEvent e) -> getInput());
+        // Set semester options
+        semesterComboBox.addItem("");
+        semesterComboBox.addItem("Fall");
+        semesterComboBox.addItem("Winter");
 
-        // Add user options to option panel
-        optionPanel.add(addCourseButton);
-        optionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        optionPanel.add(removeCourseButton);
-        optionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        optionPanel.add(addDegreeButton);
+        // Set status options
+        statusComboBox.addItem("");
+        statusComboBox.addItem("In Progress");
+        statusComboBox.addItem("Planned");
+        statusComboBox.addItem("Completed");
 
-        // Label to prompt user
-        infoLabel = new JLabel("Hey there");
-        // Error label
-        errorLabel = new JLabel("Invalid input");
-        errorLabel.setVisible(false);
+        degreeComboBox.addItem("");
+        degreeComboBox.addItem("CS");
+        degreeComboBox.addItem("SEng");
+        degreeComboBox.addItem("BCG");
 
-        // User input field
-        inputField = new JTextField();
-        inputField.setVisible(false);
-        inputField.setColumns(10);
+        // Event listeners
+        submitButton.addActionListener((ActionEvent e) -> submit());
+        addDegreeButton.addActionListener((ActionEvent e) -> selectAddDegree());
+        addToPlanButton.addActionListener((ActionEvent e) -> selectAddCourse());
+        removeCourseButton.addActionListener((ActionEvent e) -> selectRemoveCourse());
+        changeGradeButton.addActionListener((ActionEvent e) -> selectChangeGrade());
+        viewGPAButton.addActionListener((ActionEvent e) -> selectViewGPA());
+        viewCreditsButton.addActionListener((ActionEvent e) -> selectViewTotalCredits());
+        viewCISGPAButton.addActionListener((ActionEvent e) -> selectViewCisGPA());
+        studentInfoButton.addActionListener((ActionEvent e) -> selectStudentInfo());
 
-        inputPanel.add(infoLabel);
-        inputPanel.add(inputField);
-        inputPanel.add(submitButton);
-
-        // Pack and set visible
         frame.pack();
         frame.setVisible(true);
     }
 
-    private void makeFrame(){
-        // Create frame and content pane
-        frame = new JFrame("Planner");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(900,700));
-        frame.setLayout(new FlowLayout());
-        container = frame.getContentPane();
+    private void setAllInvisible() {
+        errorLabel.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+        submitButton.setVisible(false);
     }
 
-    private void makePanels() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(2, 0));
+    private void selectChangeGrade() {
+        plannedCurrentComboBox.removeAllItems();
+        completeComboBox.removeAllItems();
+        gradeTextField.setText("");
 
-        optionPanel = new JPanel();
-        optionPanel.setLayout(new BoxLayout(optionPanel, BoxLayout.Y_AXIS));
+        plannedCurrentComboBox.addItem("");
+        completeComboBox.addItem("");
 
-        inputPanel = new JPanel();
-        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
+        for (Attempt a : plan.getStudent().getTranscript().getCompletedCourses()) {
+            completeComboBox.addItem(a.getCourseCode() + " " + a.getSemesterTaken());
+        }
 
-        container.add(mainPanel);
-        mainPanel.add(optionPanel);
-        mainPanel.add(inputPanel);
+        for (Attempt a : plan.getStudent().getTranscript().getPlannedCourses()) {
+            if (!a.getStatus().equals("Planned")) {
+                plannedCurrentComboBox.addItem(a.getCourseCode() + " " + a.getSemesterTaken());
+            }
+        }
+
+        currentOption = "change grade";
+        errorLabel.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(true);
+        gradeTextField.setVisible(true);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(true);
+        plannedCurrentLabel.setVisible(true);
+        completeComboBox.setVisible(true);
+        completeLabel.setVisible(true);
+
+        submitButton.setVisible(true);
     }
 
-    private void getInput() {
+    private void selectAddCourse() {
+        currentOption = "add course";
+        errorLabel.setText("");
+        gradeTextField.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(true);
+        courseCodeComboBox.setVisible(true);
+
+        semesterComboBox.setVisible(true);
+        semesterLabel.setVisible(true);
+
+        gradeLabel.setVisible(true);
+        gradeTextField.setVisible(true);
+
+        statusComboBox.setVisible(true);
+        statusLabel.setVisible(true);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+        submitButton.setVisible(true);
+    }
+
+    private void selectRemoveCourse() {
+        plannedCurrentComboBox.removeAllItems();
+        completeComboBox.removeAllItems();
+
+        plannedCurrentComboBox.addItem("");
+        completeComboBox.addItem("");
+
+        for (Attempt a : plan.getStudent().getTranscript().getCompletedCourses()) {
+            completeComboBox.addItem(a.getCourseCode() + " " + a.getSemesterTaken());
+        }
+
+        for (Attempt a : plan.getStudent().getTranscript().getPlannedCourses()) {
+            plannedCurrentComboBox.addItem(a.getCourseCode() + " " + a.getSemesterTaken());
+        }
+
+        currentOption = "remove course";
+        errorLabel.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(true);
+        plannedCurrentLabel.setVisible(true);
+        completeComboBox.setVisible(true);
+        completeLabel.setVisible(true);
+
+        submitButton.setVisible(true);
+    }
+
+    private void selectViewTotalCredits() {
+        currentOption = "total credits";
+        errorLabel.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+
+        submitButton.setVisible(true);
+    }
+
+    private void selectViewCisGPA() {
+        currentOption = "CIS GPA";
+        errorLabel.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+        submitButton.setVisible(true);
+    }
+
+    private void selectViewGPA() {
+        currentOption = "GPA";
+        errorLabel.setText("");
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+
+        submitButton.setVisible(true);
+    }
+
+    private void selectAddDegree() {
+        currentOption = "add degree";
+
+        if (!plan.getStudent().getTranscript().hasDegree()) {
+            errorLabel.setText("Current Degree: None");
+        }
+        else {
+            errorLabel.setText("Current Degree: " + plan.getStudent().getTranscript().getDegreeTitle());
+        }
+
+        studentInfoLabel.setVisible(false);
+        studentInfoTextField.setVisible(false);
+        studentNumberLabel.setVisible(false);
+        studentNumberTextField.setVisible(false);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(true);
+        degreeLabel.setVisible(true);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+
+        submitButton.setVisible(true);
+    }
+
+    private void selectStudentInfo() {
+        currentOption = "student info";
+
+        studentInfoLabel.setVisible(true);
+        studentInfoTextField.setVisible(true);
+        studentNumberLabel.setVisible(true);
+        studentNumberTextField.setVisible(true);
+
+        courseCodeLabel.setVisible(false);
+        courseCodeComboBox.setVisible(false);
+
+        semesterComboBox.setVisible(false);
+        semesterLabel.setVisible(false);
+
+        gradeLabel.setVisible(false);
+        gradeTextField.setVisible(false);
+
+        statusComboBox.setVisible(false);
+        statusLabel.setVisible(false);
+
+        degreeComboBox.setVisible(false);
+        degreeLabel.setVisible(false);
+
+        plannedCurrentComboBox.setVisible(false);
+        plannedCurrentLabel.setVisible(false);
+        completeComboBox.setVisible(false);
+        completeLabel.setVisible(false);
+
+        submitButton.setVisible(true);
+    }
+
+    private void submit() {
+        if (currentOption.equals("add course")) {
+            addCourseToPlan();
+        }
+        else if (currentOption.equals("add degree")) {
+            addDegreeToPlan();
+        }
+        else if (currentOption.equals("remove course")) {
+            removeCourseFromPlan();
+        }
+        else if (currentOption.equals("change grade")) {
+            changeGrade();
+        }
+        else if (currentOption.equals("GPA")) {
+            viewGPA();
+        }
+        else if (currentOption.equals("total credits")) {
+            viewTotalCredits();
+        }
+        else if (currentOption.equals("CIS GPA")) {
+            viewCisGPA();
+        }
+        else if (currentOption.equals("student info")) {
+            setStudentInfo();
+        }
+    }
+
+    private void setStudentInfo() {
+        String fullName = studentInfoTextField.getText();
+        String studentNumberString = studentNumberTextField.getText();
+        int studentNumber;
+        String[] nameParts;
+        String firstName = null;
+        String lastName = null;
+
+        // Error checking
+        if (fullName.isEmpty()) {
+            errorLabel.setText("Error: No Name");
+            return;
+        }
+
+        // Student name length is not 2
+        nameParts = fullName.split(" ");
+        if (nameParts.length != 2) {
+            errorLabel.setText("Enter only first and last name");
+            return;
+        }
+        else {
+            try {
+                firstName = nameParts[0];
+                lastName = nameParts[1];
+                if (firstName.isEmpty() || lastName.isEmpty()) {
+                    errorLabel.setText("Error: invalid input");
+                    return;
+                }
+                plan.getStudent().setFirstName(firstName);
+                plan.getStudent().setLastName(lastName);
+            }
+            catch (Exception e) {
+                errorLabel.setText("Error: invalid input");
+            }
+        }
+
+        if (studentNumberString.isEmpty()) {
+            errorLabel.setText("Error: No Student Number");
+            return;
+        }
         try {
-            System.out.println("yeet");
-            userInputString = inputField.getText();
-            System.out.println(userInputString);
+            if (studentNumberString.length() != 7) {
+                errorLabel.setText("Error: student number length should be 7");
+                return;
+            }
+
+            studentNumber = Integer.parseInt(studentNumberString);
+            plan.getStudent().setStudentNumber(studentNumber);
         }
         catch (Exception e) {
-            System.out.println("Error, invalid input");
+            errorLabel.setText("Error: Invalid Student Number");
+            return;
+        }
+
+        errorLabel.setText(firstName + " " + lastName + ": " + studentNumberString);
+    }
+
+    /**
+     * Displays the total number of credits completed
+     */
+    private void viewTotalCredits() {
+        // Get number of credits completed from transcript
+        double credits = plan.getStudent().getTranscript().getCreditsCompleted();
+
+        // Could not find number of credits
+        if (credits == -1) {
+            errorLabel.setText("Error");
+            return;
+        }
+
+        errorLabel.setText("Total credits: " + credits);
+    }
+
+    /**
+     * Display the GPA of all CIS courses completed in the transcript
+     */
+    private void viewCisGPA() {
+        if (plan.getStudent().getTranscript().getCreditsCompleted() == 0) {
+            errorLabel.setText("No CIS courses Completed");
+            return;
+        }
+
+        for (Attempt a : plan.getStudent().getTranscript().getCompletedCourses()) {
+            try {
+                String courseCode = a.getCourseCode();
+                System.out.println("REEEEE " + courseCode);
+            }
+            catch (Exception e) {
+
+            }
         }
     }
 
-    private void addCourse() {
-        boolean validInput = false;
-        String input;
+    /**
+     * Display the GPA of all completed courses in the transcript
+     */
+    private void viewGPA() {
+        // No credits completed, GPA is empty
+        if (plan.getStudent().getTranscript().getCreditsCompleted() == 0) {
+            errorLabel.setText("No Courses Completed");
+            return;
+        }
 
-        inputField.setVisible(true);
-        submitButton.setVisible(true);
+        // Find GPA from transcript
+        double gpa = plan.getStudent().getTranscript().getGPA();
 
-        // Get course code to add
-        infoLabel.setText("Enter Course Code: ");
+        // Error finding GPA
+        if (gpa == -1) {
+            errorLabel.setText("Error: can't get GPA");
+            return;
+        }
 
-        if (userInputString != null) {
-            infoLabel.setText(userInputString);
+        errorLabel.setText("GPA: " + gpa);
+    }
+
+    /**
+     * Change the grade of a course attempt in the student's transcript
+     * @Exception Exception if the input grade is non numerical
+     */
+    private void changeGrade() {
+        // Ensure valid grade
+        String gradeString = gradeTextField.getText();
+        double grade;
+        if (gradeString.isEmpty()) {
+            errorLabel.setText("Empty grade");
+            return;
+        }
+        try {
+            grade = Double.parseDouble(gradeString);
+        }
+        catch (Exception e) {
+            errorLabel.setText("Error: invalid grade");
+            return;
+        }
+        if (grade < 0 || grade > 100) {
+            errorLabel.setText("Error: invalid grade");
+            return;
+        }
+
+        String completed = (String)completeComboBox.getSelectedItem();
+        String plannedCurrent = (String)plannedCurrentComboBox.getSelectedItem();
+
+        // If no boxes or both boxes are selected, error
+        if (plannedCurrent.isEmpty() && completed.isEmpty()) {
+            errorLabel.setText("No course selected");
+            return;
+        }
+        else if (!plannedCurrent.isEmpty() && !completed.isEmpty()) {
+            errorLabel.setText("Select one course only");
+            return;
+        }
+
+        // Change grade for a current course
+        if (!plannedCurrent.isEmpty()) {
+            try {
+                plan.getStudent().getTranscript().updatePlannedGrade(plannedCurrent, gradeString);
+                errorLabel.setText(plannedCurrent + " grade is now: " + gradeString + "%");
+                return;
+            }
+            catch (Exception e) {
+                errorLabel.setText("Could not update grade");
+                return;
+            }
+        }
+        // Change grade for completed course
+        else if (!completed.isEmpty()) {
+            try {
+                String[] holder = completed.split(" ");
+                plan.getStudent().getTranscript().updateCompletedGrade(holder[0] + " " + holder[1], gradeString);
+                errorLabel.setText(completed + " grade is now: " + gradeString + "%");
+                return;
+            }
+            catch (Exception e) {
+                errorLabel.setText("Could not update grade");
+                return;
+            }
+        }
+    }
+
+    /**
+     * Removes a course from a students plan of study
+     * @Exception Exception in case of null value passed back from transcript
+     */
+    private void removeCourseFromPlan() {
+        String plannedToRemove = (String) plannedCurrentComboBox.getSelectedItem();
+        String completeToRemove = (String) completeComboBox.getSelectedItem();
+        String[] holder;
+
+        // Two or zero courses selected to remove
+        if (plannedToRemove.isEmpty() && completeToRemove.isEmpty()) {
+            errorLabel.setText("No course(s) chosen");
+            return;
+        }
+        else if (!plannedToRemove.isEmpty() && !completeToRemove.isEmpty()) {
+            errorLabel.setText("Error: choose only 1 course to remove");
+            return;
+        }
+
+        // Remove planned course from transcript
+        if (!plannedToRemove.isEmpty()) {
+            try {
+                holder = plannedToRemove.split(" ");
+                plan.getStudent().getTranscript().removePlannedCourse(holder[0] + " " + holder[1]);
+                errorLabel.setText("Removed: " + holder[0] + " " + holder[1]);
+            } catch (Exception e) {
+                errorLabel.setText("Could not remove course");
+            }
+        }
+
+        // Remove completed course from transcript
+        if (!completeToRemove.isEmpty()) {
+            try {
+                holder = completeToRemove.split(" ");
+                plan.getStudent().getTranscript().removeCompleteCourse(holder[0] + " " + holder[1]);
+                errorLabel.setText("Removed: " + holder[0] + " " + holder[1]);
+            } catch (Exception e) {
+                errorLabel.setText("Could not remove course");
+            }
+        }
+
+    }
+
+    /**
+     * Takes user selected course code, grade, course status, and semester and creates a course
+     * attempt, and adds it to their transcript
+     * @exception Exception if user enters a non numerical value into course grade
+     */
+    private void addCourseToPlan() {
+        errorLabel.setText("");
+        Course courseToAddToPlan;
+
+        // Create course from chosen course code
+        String courseSelected = (String) courseCodeComboBox.getSelectedItem();
+
+        // If the course exists create it
+        if (!(courseSelected.isEmpty())) {
+            courseToAddToPlan = new Course(plan.getCatalog().findCourse(courseSelected));
+        } else {
+            errorLabel.setText("Error: course not found");
+            return;
+        }
+
+        // Ensure valid semester
+        String semester = (String) semesterComboBox.getSelectedItem();
+        if (semester.isEmpty()) {
+            errorLabel.setText("Error: no semester");
+            return;
+        }
+
+        // Ensure valid course status
+        String status = (String) statusComboBox.getSelectedItem();
+        if (status.isEmpty()) {
+            errorLabel.setText("Error: no status");
+            return;
+        }
+
+        // Ensure valid grade
+        String gradeString = gradeTextField.getText();
+        double grade;
+        if (gradeString.isEmpty() && !status.equals("Planned")) {
+            errorLabel.setText("Error: no grade");
+            return;
+        }
+        else if (!gradeString.isEmpty() && status.equals("Planned")) {
+            errorLabel.setText("Error: planned course with grade");
+            return;
+        }
+        else if (gradeString.isEmpty() && status.equals("Planned")) {
+
+        }
+        else {
+            try {
+                grade = Double.parseDouble(gradeString);
+            }
+            catch (Exception e) {
+                errorLabel.setText("Error: invalid grade");
+                return;
+            }
+            if (grade < 0 || grade > 100) {
+                errorLabel.setText("Error: invalid grade");
+                return;
+            }
+        }
+
+        Attempt newAttempt = new Attempt(courseToAddToPlan, semester, gradeString, status);
+
+        // Make sure attempt is not already in plan of study, if not then add it
+        // Add course to planned list
+        if (status.equals("In Progress") || status.equals("Planned")) {
+            for (Attempt a : plan.getStudent().getTranscript().getCompletedCourses()) {
+                if (a.getSemesterTaken().equals(semester) && a.getCourseCode().equals(courseSelected)) {
+                    errorLabel.setText("Course already exists");
+                    return;
+                }
+            }
+            for (Attempt a : plan.getStudent().getTranscript().getPlannedCourses()) {
+                if (a.getSemesterTaken().equals(semester) && a.getCourseCode().equals(courseSelected)) {
+                    errorLabel.setText("Course already exists");
+                    return;
+                }
+            }
+            plan.getStudent().getTranscript().addPlannedCourse(newAttempt);
+            errorLabel.setText("Course Added");
+        }
+
+        // Add course attempt to completed list
+        if (status.equals("Completed")) {
+            for (Attempt a : plan.getStudent().getTranscript().getPlannedCourses()) {
+                if (a.getSemesterTaken().equals(semester) && a.getCourseCode().equals(courseSelected)) {
+                    errorLabel.setText("Already exists");
+                    return;
+                }
+            }
+            for (Attempt a : plan.getStudent().getTranscript().getCompletedCourses()) {
+                if (a.getSemesterTaken().equals(semester) && a.getCourseCode().equals(courseSelected)) {
+                    errorLabel.setText("Already exists");
+                    return;
+                }
+            }
+            plan.getStudent().getTranscript().addCompletedCourse(newAttempt);
+            errorLabel.setText("Course Added");
+        }
+    }
+
+    /**
+     * Takes choice for degree and sets degree in transcript
+     */
+    private void addDegreeToPlan() {
+        errorLabel.setText("");
+        String choice = (String)degreeComboBox.getSelectedItem();
+
+        // Ensure degree is selected
+        if (choice.isEmpty()) {
+            errorLabel.setText("Nothing selected");
+            return;
+        }
+
+        // Create degree for student
+        if (choice.equals("CS")) {
+            Degree deg = new CS();
+            plan.getStudent().getTranscript().setDegree(deg);
+            errorLabel.setText("Degree added");
+        }
+        else if (choice.equals("SEng")) {
+            Degree deg = new SEng();
+            plan.getStudent().getTranscript().setDegree(deg);
+            errorLabel.setText("Degree added");
+        }
+        else if (choice.equals("BCG")) {
+            Degree deg = new BCG();
+            plan.getStudent().getTranscript().setDegree(deg);
+            errorLabel.setText("Degree added");
+        }
+        else {
+            errorLabel.setText("Error");
         }
     }
 }

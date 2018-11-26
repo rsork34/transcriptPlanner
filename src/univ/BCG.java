@@ -13,7 +13,7 @@ public class BCG extends Degree {
     private static final double rqrdArtsSocialScienceCredits = 2.00;
 
     public BCG() {
-        super();
+        super("BCG");
     }
 
     /*public boolean meetsRequirements(PlanOfStudy thePlan) {
@@ -100,6 +100,10 @@ public class BCG extends Degree {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
         if (o == this) {
             return true;
         }

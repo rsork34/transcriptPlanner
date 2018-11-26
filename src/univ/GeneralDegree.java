@@ -10,5 +10,9 @@ public abstract class GeneralDegree extends Degree {
         super(); 
     }
 
+    GeneralDegree(String title) {
+        super(title);
+    }
+
 
 }

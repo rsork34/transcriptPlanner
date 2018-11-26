@@ -24,14 +24,33 @@ public class PlanOfStudy
     }
 
     public void addAttemptToPlan(Course course, String semester, String grade, String status) {
-        if (status.equals("In Progress")) {
+       Attempt toAdd = new Attempt(course, semester, grade, status);
 
-        }
-        else if (status.equals("Planned")) {
+       if (status.toLowerCase().equals("in progress")) {
+           student.getTranscript().addPlannedCourse(toAdd);
+       }
+       else if (status.toLowerCase().equals("completed")) {
+           student.getTranscript().addCompletedCourse(toAdd);
+       }
+       else {
+           System.out.println("Error, invalid course status");
+       }
+    }
 
+    @Override
+    public String toString() {
+        String toReturn = "Completed Courses: ";
+
+        for (Attempt a : student.getTranscript().getCompletedCourses()) {
+            toReturn += a.getCourseCode() + ", ";
         }
-        else {
-            System.out.println("Error Invalid Attempt");
+
+        toReturn += "Planned Courses: ";
+
+        for (Attempt a : student.getTranscript().getPlannedCourses()) {
+            toReturn += a.getCourseCode() + ", ";
         }
+
+        return toReturn;
     }
 }
